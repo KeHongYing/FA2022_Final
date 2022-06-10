@@ -54,7 +54,7 @@ export default function PrettoSlider(props) {
       <Typography gutterBottom color="common.black">
         {name}
       </Typography>
-      <PrettoSlider
+      <Slider
         aria-label={name}
         value={value}
         onChange={handleChange}
