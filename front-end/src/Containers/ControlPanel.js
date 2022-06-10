@@ -4,16 +4,6 @@ import TextField from "@mui/material/TextField";
 import PrettoSlider from "../Components/PrettoSlider";
 
 export default function ControlPanel() {
-  const [interestRate, setInterestRate] = React.useState(3);
-  const [volitility, setValitility] = React.useState(30);
-
-  const handleChangeInterestRate = (event, newValue) => {
-    setInterestRate(newValue);
-  };
-  const handleChangeVolitility = (event, newValue) => {
-    setValitility(newValue);
-  };
-
   return (
     <Box
       component="form"
@@ -38,18 +28,8 @@ export default function ControlPanel() {
         />
       </div>
       <div>
-        <PrettoSlider
-          aria-label="Annual Interest Rate"
-          value={interestRate}
-          onChange={handleChangeInterestRate}
-          valueLabelDisplay="auto"
-        />
-        <PrettoSlider
-          aria-label="Volitility"
-          value={volitility}
-          onChange={handleChangeVolitility}
-          valueLabelDisplay="auto"
-        />
+        <PrettoSlider name="Annual Interest Rate" defaultValue={3} />
+        <PrettoSlider name="Volitility" defaultValue={30} />
       </div>
       <div>
         <TextField
