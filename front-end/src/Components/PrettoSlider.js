@@ -55,7 +55,7 @@ export default function PrettoSlider(props) {
         onChange={(event) => {
           setValue(event.target.value);
         }}
-        valueLabelDisplay="auto"
+        valueLabelDisplay="auto" 
       />
     </div>
   );

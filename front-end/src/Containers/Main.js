@@ -11,6 +11,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Fade from "@mui/material/Fade";
 import ControlPanel from "./ControlPanel";
 import DisplayPanel from "./DisplayPanel";
+import PricingApi from "../Components/PricingApi";
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -99,6 +100,8 @@ export default function Main(props) {
         setOptionType={setOptionType}
         optionStyle={optionStyle}
         setOptionStyle={setOptionStyle}
+        setPrice={setPrice}
+        pricingApi={new PricingApi("http://localhost:8080")}
       ></ControlPanel>
       <ScrollTop {...props}>
         <Fab size="small" aria-label="scroll back to top">

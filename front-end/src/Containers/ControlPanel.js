@@ -6,6 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Button from "@mui/material/Button";
 
 export default function ControlPanel(props) {
   const {
@@ -25,7 +26,11 @@ export default function ControlPanel(props) {
     setOptionType,
     optionStyle,
     setOptionStyle,
+    setPrice,
+    pricingApi,
   } = props;
+
+  const [isBermuda, setIsBermuda] = React.useState(false);
 
   return (
     <Box
@@ -61,6 +66,7 @@ export default function ControlPanel(props) {
             label="Option Style"
             onChange={(event) => {
               setOptionStyle(event.target.value);
+              setIsBermuda(event.target.value === "bermuda");
             }}
           >
             <MenuItem value="american">American</MenuItem>
@@ -71,6 +77,7 @@ export default function ControlPanel(props) {
       </div>
       <div>
         <TextField
+          type="number"
           id="spotPriceInput"
           label="Spot Price"
           defaultValue={spotPrice}
@@ -80,6 +87,7 @@ export default function ControlPanel(props) {
           }}
         />
         <TextField
+          type="number"
           id="strikePriceInput"
           label="Strike Price"
           defaultValue={strikePrice}
@@ -90,11 +98,20 @@ export default function ControlPanel(props) {
         />
       </div>
       <div>
-        <PrettoSlider name="Annual Interest Rate" value={interestRate} setValue={setInterestRate}/>
-        <PrettoSlider name="Volitility" value={volatility} setValue={setVolatility}/>
+        <PrettoSlider
+          name="Annual Interest Rate (%)"
+          value={interestRate}
+          setValue={setInterestRate}
+        />
+        <PrettoSlider
+          name="Volitility (%)"
+          value={volatility}
+          setValue={setVolatility}
+        />
       </div>
       <div>
         <TextField
+          type="number"
           id="matureTimeInput"
           label="Mature Time"
           defaultValue={matureTime}
@@ -104,6 +121,7 @@ export default function ControlPanel(props) {
           }}
         />
         <TextField
+          type="number"
           id="periodsPerDayInput"
           label="Periods per Day"
           defaultValue={periods}
@@ -112,6 +130,40 @@ export default function ControlPanel(props) {
             setPeriods(event.target.value);
           }}
         />
+      </div>
+      <div>
+        <TextField
+          disabled={!isBermuda}
+          id="exerciseDateInput"
+          label="Exercise Date"
+          defaultValue=""
+          helperText="Exercise Date"
+          onChange={(event) => {
+            // Todo
+          }}
+        />
+      </div>
+      <div>
+        <Button
+          variant="contained"
+          onClick={() => {
+            pricingApi.calculate(
+              optionType,
+              optionStyle,
+              spotPrice,
+              strikePrice,
+              interestRate,
+              volatility,
+              matureTime,
+              periods,
+              (result) => {
+                setPrice(result > 0 ? result : "Invalid");
+              }
+            );
+          }}
+        >
+          Pricing
+        </Button>
       </div>
     </Box>
   );
