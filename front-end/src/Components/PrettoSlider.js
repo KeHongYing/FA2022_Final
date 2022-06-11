@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
 export default function PrettoSlider(props) {
-  const { name, defaultValue } = props;
+  const { name, value, setValue } = props;
   const PrettoSlider = styled(Slider)({
     color: "#52af77",
     height: 8,
@@ -43,11 +43,6 @@ export default function PrettoSlider(props) {
       },
     },
   });
-  const [value, setValue] = React.useState(defaultValue);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <div>
@@ -57,7 +52,9 @@ export default function PrettoSlider(props) {
       <Slider
         aria-label={name}
         value={value}
-        onChange={handleChange}
+        onChange={(event) => {
+          setValue(event.target.value);
+        }}
         valueLabelDisplay="auto"
       />
     </div>

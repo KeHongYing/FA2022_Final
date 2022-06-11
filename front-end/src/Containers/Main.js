@@ -10,6 +10,7 @@ import Fab from "@mui/material/Fab";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Fade from "@mui/material/Fade";
 import ControlPanel from "./ControlPanel";
+import DisplayPanel from "./DisplayPanel";
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -58,6 +59,17 @@ ScrollTop.propTypes = {
 
 export default function Main(props) {
   const { title } = props;
+
+  const [price, setPrice] = React.useState(100);
+  const [spotPrice, setSpotPrice] = React.useState(100);
+  const [strikePrice, setStrikePrice] = React.useState(100);
+  const [interestRate, setInterestRate] = React.useState(3);
+  const [volatility, setVolatility] = React.useState(30);
+  const [matureTime, setMatureTime] = React.useState(60);
+  const [periods, setPeriods] = React.useState(5);
+  const [optionType, setOptionType] = React.useState("put");
+  const [optionStyle, setOptionStyle] = React.useState("europe");
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -69,7 +81,25 @@ export default function Main(props) {
         </Toolbar>
       </AppBar>
       <Toolbar id="back-to-top-anchor" />
-      <ControlPanel></ControlPanel>
+      <DisplayPanel price={price}></DisplayPanel>
+      <ControlPanel
+        spotPrice={spotPrice}
+        setSpotPrice={setSpotPrice}
+        strikePrice={strikePrice}
+        setStrikePrice={setStrikePrice}
+        interestRate={interestRate}
+        setInterestRate={setInterestRate}
+        volatility={volatility}
+        setVolatility={setVolatility}
+        matureTime={matureTime}
+        setMatureTime={setMatureTime}
+        periods={periods}
+        setPeriods={setPeriods}
+        optionType={optionType}
+        setOptionType={setOptionType}
+        optionStyle={optionStyle}
+        setOptionStyle={setOptionStyle}
+      ></ControlPanel>
       <ScrollTop {...props}>
         <Fab size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />
