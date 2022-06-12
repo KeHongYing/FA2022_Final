@@ -49,7 +49,7 @@ class PricingApi {
       .then((res) => res.json())
       .then(
         (response) => {
-          handler(response["result"]);
+          handler(response["result"], response["prices"]);
         },
         (err) => {
           handler(err);

@@ -27,9 +27,10 @@ export default function ControlPanel(props) {
     optionStyle,
     setOptionStyle,
     setPrice,
-    pricingApi,
     exerciseDate,
     setExerciseDate,
+    setTreePath,
+    pricingApi,
   } = props;
 
   const [isBermuda, setIsBermuda] = React.useState(false);
@@ -210,8 +211,9 @@ export default function ControlPanel(props) {
                 matureTime,
                 periods,
                 exerciseDate,
-                (result) => {
+                (result, prices) => {
                   setPrice(result > 0 ? result : "Invalid");
+                  setTreePath(prices);
                 }
               );
             }

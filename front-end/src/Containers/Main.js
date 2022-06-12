@@ -71,6 +71,7 @@ export default function Main(props) {
   const [optionType, setOptionType] = React.useState("put");
   const [optionStyle, setOptionStyle] = React.useState("europe");
   const [exerciseDate, setExerciseDate] = React.useState("");
+  const [treePath, setTreePath] = React.useState([]);
 
   return (
     <React.Fragment>
