@@ -19,7 +19,8 @@ CalcResourceFactory::CalcResourceFactory()
         "/{interestRate: [-+]?[0-9]*}"
         "/{volatility: [-+]?[0-9]*}"
         "/{matureDate: [-+]?[0-9]*}"
-        "/{periods: [-+]?[0-9]*}");
+        "/{periods: [-+]?[0-9]*}"
+        "/{exerciseDates: [0-9_]*}");
     _resource->set_method_handler("GET",
                                   [&](const auto session)
                                   {
@@ -32,15 +33,34 @@ shared_ptr<Resource> CalcResourceFactory::get_resource() const
     return _resource;
 }
 
-double CalcResourceFactory::calculate(string optionType, string optionStyle, double spotPrice, double strikePrice, double interestRate, double volatility, int matureDate, int periods)
+unordered_set<int> CalcResourceFactory::string_to_unordered_set(string s, string delimiter = "_") {
+    unordered_set<int> res;
+    size_t pos = 0;
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        string tmp = s.substr(0, pos);
+        if (!tmp.empty()) {
+            res.insert(stoi(tmp));
+        }
+        s.erase(0, pos + delimiter.length());
+    }
+    if (!s.empty()) {
+        res.insert(stoi(s));
+    }
+    
+    return res;
+}
+
+double CalcResourceFactory::calculate(string optionType, string optionStyle, double spotPrice, double strikePrice, double interestRate, double volatility, int matureDate, int periods, string exerciseDatesStr)
 {
-    bool isCallOption = optionType[0] == 'c' || optionType[0] == 'C';
     std::cout << optionType << " " << optionStyle << " " << spotPrice << " " << strikePrice << " " << interestRate << " " << volatility << " " << matureDate << " " << periods << endl;
-    Option option(optionStyle, isCallOption, spotPrice, strikePrice, interestRate, volatility, matureDate, periods);
+    std::cout << exerciseDatesStr << endl;
+    bool isCallOption = optionType[0] == 'c' || optionType[0] == 'C';
+    unordered_set<int> exerciseDates = string_to_unordered_set(exerciseDatesStr);
+    Option option(optionStyle, isCallOption, spotPrice, strikePrice, interestRate, volatility, matureDate, periods, exerciseDates);
     return option.getPrice();
 }
 
-tuple<string, string, double, double, double, double, int, int> CalcResourceFactory::get_path_parameters(
+tuple<string, string, double, double, double, double, int, int, string> CalcResourceFactory::get_path_parameters(
     const shared_ptr<Session> session) const
 {
     const auto &request = session->get_request();
@@ -52,7 +72,8 @@ tuple<string, string, double, double, double, double, int, int> CalcResourceFact
     auto volatility = atof(request->get_path_parameter("volatility").c_str()) / 100.0;
     auto matureDate = atof(request->get_path_parameter("matureDate").c_str());
     auto periods = atof(request->get_path_parameter("periods").c_str());
-    return make_tuple(optionType, optionStyle, spotPrice, strikePrice, interestRate, volatility, matureDate, periods);
+    auto exerciseDatesStr = request->get_path_parameter("exerciseDates");
+    return make_tuple(optionType, optionStyle, spotPrice, strikePrice, interestRate, volatility, matureDate, periods, exerciseDatesStr);
 }
 
 string CalcResourceFactory::to_json(float result)
@@ -66,8 +87,8 @@ string CalcResourceFactory::to_json(float result)
 
 void CalcResourceFactory::get_handler(const shared_ptr<Session> session)
 {
-    const auto [optionType, optionStyle, spotPrice, strikePrice, interestRate, volatility, matureDate, periods] = get_path_parameters(session);
-    auto result = calculate(optionType, optionStyle, spotPrice, strikePrice, interestRate, volatility, matureDate, periods);
+    const auto [optionType, optionStyle, spotPrice, strikePrice, interestRate, volatility, matureDate, periods, exerciseDatesStr] = get_path_parameters(session);
+    auto result = calculate(optionType, optionStyle, spotPrice, strikePrice, interestRate, volatility, matureDate, periods, exerciseDatesStr);
     auto content = to_json(result);
     session->close(OK, content,
                    {{"Content-Length", to_string(content.size())}});

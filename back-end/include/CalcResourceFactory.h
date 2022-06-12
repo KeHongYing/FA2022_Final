@@ -2,6 +2,7 @@
 
 #include <string>
 #include <tuple>
+#include <unordered_set>
 
 #include "IResourceFactory.h"
 
@@ -13,8 +14,9 @@ public:
     shared_ptr<Resource> get_resource() const final;
 
 private:
-    double calculate(string optionType, string optionStyle, double spotPrice, double strikePrice, double interestRate, double volatility, int matureDate, int periods);
-    tuple<string, string, double, double, double, double, int, int> get_path_parameters(const shared_ptr<Session> session) const;
+    unordered_set<int> string_to_unordered_set(string s, string delimiter);
+    double calculate(string optionType, string optionStyle, double spotPrice, double strikePrice, double interestRate, double volatility, int matureDate, int periods, string exerciseDatesStr);
+    tuple<string, string, double, double, double, double, int, int, string> get_path_parameters(const shared_ptr<Session> session) const;
     string to_json(float result);
     void get_handler(const shared_ptr<Session> session);
 
