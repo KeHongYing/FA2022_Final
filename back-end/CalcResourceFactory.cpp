@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iomanip>
 #include "json.hpp"
+#include <iostream>
 
 using namespace nlohmann;
 
@@ -30,25 +31,10 @@ shared_ptr<Resource> CalcResourceFactory::get_resource() const
     return _resource;
 }
 
-float CalcResourceFactory::calculate(float num1, float num2, string operation)
+double CalcResourceFactory::calculate(string optionType, string optionStyle, double spotPrice, double strikePrice, double interestRate, double volatility, int matureDate, int periods)
 {
-    return 123;
-    if (operation == "add")
-    {
-        return num1 + num2;
-    }
-    else if (operation == "subtract")
-    {
-        return num1 - num2;
-    }
-    else if (operation == "multiply")
-    {
-        return num1 * num2;
-    }
-    else if (operation == "divide")
-    {
-        return num1 / num2;
-    }
+    std::cout << optionType << " " << optionStyle << endl;
+    return 1234;
 }
 
 tuple<string, string, double, double, double, double, int, int> CalcResourceFactory::get_path_parameters(
