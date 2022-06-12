@@ -28,6 +28,8 @@ class Option {
     double downProbability;
 
    public:
+    vector<vector<double>> prices;
+    Option() {}
     Option(string type, bool isCallOption, double stockPrice, double strikePrice, double annualRate,
            double annualVolatility, int maturityDay, int periodPerDay,
            unordered_set<int> exerciseDays = unordered_set<int>())
@@ -67,7 +69,7 @@ class Option {
     }
 
     double getPrice() {
-        vector<vector<double>> prices(numPeriods + 1, vector<double>(numPeriods + 1, 0));
+        prices = vector<vector<double>>(numPeriods + 1, vector<double>(numPeriods + 1, 0));
         prices[0][0] = stockPrice;
 
         // forward

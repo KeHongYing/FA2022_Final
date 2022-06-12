@@ -5,6 +5,7 @@
 #include <unordered_set>
 
 #include "IResourceFactory.h"
+#include "option.hpp"
 
 class CalcResourceFactory : public IResourceFactory
 {
@@ -21,4 +22,5 @@ private:
     void get_handler(const shared_ptr<Session> session);
 
     shared_ptr<Resource> _resource;
+    Option _option;
 };

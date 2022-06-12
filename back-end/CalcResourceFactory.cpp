@@ -56,8 +56,8 @@ double CalcResourceFactory::calculate(string optionType, string optionStyle, dou
     std::cout << exerciseDatesStr << endl;
     bool isCallOption = optionType[0] == 'c' || optionType[0] == 'C';
     unordered_set<int> exerciseDates = string_to_unordered_set(exerciseDatesStr);
-    Option option(optionStyle, isCallOption, spotPrice, strikePrice, interestRate, volatility, matureDate, periods, exerciseDates);
-    return option.getPrice();
+    _option = Option(optionStyle, isCallOption, spotPrice, strikePrice, interestRate, volatility, matureDate, periods, exerciseDates);
+    return _option.getPrice();
 }
 
 tuple<string, string, double, double, double, double, int, int, string> CalcResourceFactory::get_path_parameters(
@@ -78,10 +78,9 @@ tuple<string, string, double, double, double, double, int, int, string> CalcReso
 
 string CalcResourceFactory::to_json(float result)
 {
-    ostringstream str_stream;
-    str_stream << result;
-    json jsonResult = {
-        {"result", str_stream.str()}};
+    json jsonResult;
+    jsonResult["result"] = result;
+    jsonResult["prices"] = _option.prices;
     return jsonResult.dump();
 }
 
