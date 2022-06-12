@@ -6,6 +6,7 @@ CalcServiceSettingsFactory::CalcServiceSettingsFactory()
     _settings->set_port(8080);
     _settings->set_default_header("Connection", "close");
     _settings->set_default_header("Access-Control-Allow-Origin", "*");
+    _settings->set_default_header("Access-Control-Allow-Private-Network", "true");
 }
 
 shared_ptr<Settings> CalcServiceSettingsFactory::get_settings() const

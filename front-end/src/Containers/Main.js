@@ -101,7 +101,7 @@ export default function Main(props) {
         optionStyle={optionStyle}
         setOptionStyle={setOptionStyle}
         setPrice={setPrice}
-        pricingApi={new PricingApi("http://localhost:8080")}
+        pricingApi={new PricingApi("http://127.0.0.1:8080")}
       ></ControlPanel>
       <ScrollTop {...props}>
         <Fab size="small" aria-label="scroll back to top">

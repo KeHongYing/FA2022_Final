@@ -38,7 +38,8 @@ class PricingApi {
         volatility,
         matureTime,
         periods
-      )
+      ),
+      { method: "GET", mode: "cors" }
     )
       .then((res) => res.json())
       .then(

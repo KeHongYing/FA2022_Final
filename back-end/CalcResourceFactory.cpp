@@ -33,7 +33,7 @@ shared_ptr<Resource> CalcResourceFactory::get_resource() const
 
 double CalcResourceFactory::calculate(string optionType, string optionStyle, double spotPrice, double strikePrice, double interestRate, double volatility, int matureDate, int periods)
 {
-    std::cout << optionType << " " << optionStyle << endl;
+    std::cout << optionType << " " << optionStyle << " " << spotPrice << " " << strikePrice << " " << interestRate << " " << volatility << " " << matureDate << " " << periods << endl;
     return 1234;
 }
 
