@@ -33,6 +33,11 @@ export default function ControlPanel(props) {
   } = props;
 
   const [isBermuda, setIsBermuda] = React.useState(false);
+  const [isInvalidSpotPrice, setIsInvalidSpotPrice] = React.useState(false);
+  const [isInvalidStrikePrice, setIsInvalidStrikePrice] = React.useState(false);
+  const [isInvalidMatureDate, setIsInvalidMatureDate] = React.useState(false);
+  const [isInvalidPeriods, setIsInvalidPeriods] = React.useState(false);
+  const [isInvalidExercise, setIsInvalidExercise] = React.useState(false);
 
   return (
     <Box
@@ -79,23 +84,32 @@ export default function ControlPanel(props) {
       </div>
       <div>
         <TextField
+          error={isInvalidSpotPrice}
           type="number"
           id="spotPriceInput"
           label="Spot Price"
           defaultValue={spotPrice}
-          helperText="Spot Price"
+          helperText={isInvalidSpotPrice ? "Not Positive Number" : " "}
           onChange={(event) => {
+            console.log(event.target.value);
             setSpotPrice(event.target.value);
+            setIsInvalidSpotPrice(
+              event.target.value < 0 || event.target.value === ""
+            );
           }}
         />
         <TextField
+          error={isInvalidStrikePrice}
           type="number"
           id="strikePriceInput"
           label="Strike Price"
           defaultValue={strikePrice}
-          helperText="Strike Price"
+          helperText={isInvalidStrikePrice ? "Not Positive Number" : " "}
           onChange={(event) => {
             setStrikePrice(event.target.value);
+            setIsInvalidStrikePrice(
+              event.target.value < 0 || event.target.value === ""
+            );
           }}
         />
       </div>
@@ -113,56 +127,92 @@ export default function ControlPanel(props) {
       </div>
       <div>
         <TextField
+          error={isInvalidMatureDate}
           type="number"
           id="matureTimeInput"
           label="Mature Time"
           defaultValue={matureTime}
-          helperText="Mature Time"
+          helperText={isInvalidMatureDate ? "Not Natural Number" : " "}
           onChange={(event) => {
             setMatureTime(event.target.value);
+            setIsInvalidMatureDate(
+              event.target.value < 0 ||
+                event.target.value.includes(".") ||
+                event.target.value === ""
+            );
           }}
         />
         <TextField
+          error={isInvalidPeriods}
           type="number"
           id="periodsPerDayInput"
           label="Periods per Day"
           defaultValue={periods}
-          helperText="Periods per Day"
+          helperText={isInvalidPeriods ? "Not Natural Number" : " "}
           onChange={(event) => {
             setPeriods(event.target.value);
+            setIsInvalidPeriods(
+              event.target.value < 0 ||
+                event.target.value.includes(".") ||
+                event.target.value === ""
+            );
           }}
         />
       </div>
       <div>
         <TextField
           disabled={!isBermuda}
+          error={isInvalidExercise}
           id="exerciseDateInput"
           label="Exercise Date"
           defaultValue=""
           helperText="Exercise Date"
           onChange={(event) => {
+            const v = event.target.value.trim();
             setExerciseDate(event.target.value);
+            setIsInvalidExercise(
+              !v
+                .split(" ")
+                .every(
+                  (n) => n !== "" && !isNaN(n) && n > 0 && !n.includes(".")
+                )
+            );
           }}
         />
       </div>
       <div>
         <Button
           variant="contained"
+          disabled={
+            isInvalidSpotPrice ||
+            isInvalidStrikePrice ||
+            isInvalidMatureDate ||
+            isInvalidPeriods ||
+            isInvalidExercise
+          }
           onClick={() => {
-            pricingApi.calculate(
-              optionType,
-              optionStyle,
-              spotPrice,
-              strikePrice,
-              interestRate,
-              volatility,
-              matureTime,
-              periods,
-              exerciseDate,
-              (result) => {
-                setPrice(result > 0 ? result : "Invalid");
-              }
-            );
+            if (
+              isInvalidSpotPrice ||
+              isInvalidStrikePrice ||
+              isInvalidMatureDate ||
+              isInvalidPeriods ||
+              isInvalidExercise
+            ) {
+              pricingApi.calculate(
+                optionType,
+                optionStyle,
+                spotPrice,
+                strikePrice,
+                interestRate,
+                volatility,
+                matureTime,
+                periods,
+                exerciseDate,
+                (result) => {
+                  setPrice(result > 0 ? result : "Invalid");
+                }
+              );
+            }
           }}
         >
           Pricing
