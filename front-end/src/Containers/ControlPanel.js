@@ -192,11 +192,13 @@ export default function ControlPanel(props) {
           }
           onClick={() => {
             if (
-              isInvalidSpotPrice ||
-              isInvalidStrikePrice ||
-              isInvalidMatureDate ||
-              isInvalidPeriods ||
-              isInvalidExercise
+              !(
+                isInvalidSpotPrice ||
+                isInvalidStrikePrice ||
+                isInvalidMatureDate ||
+                isInvalidPeriods ||
+                isInvalidExercise
+              )
             ) {
               pricingApi.calculate(
                 optionType,

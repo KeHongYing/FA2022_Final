@@ -61,7 +61,7 @@ ScrollTop.propTypes = {
 export default function Main(props) {
   const { title } = props;
 
-  const [price, setPrice] = React.useState(100);
+  const [price, setPrice] = React.useState(4.5915);
   const [spotPrice, setSpotPrice] = React.useState(100);
   const [strikePrice, setStrikePrice] = React.useState(100);
   const [interestRate, setInterestRate] = React.useState(3);

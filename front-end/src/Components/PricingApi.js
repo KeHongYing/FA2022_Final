@@ -14,7 +14,8 @@ class PricingApi {
     periods,
     exerciseDate
   ) {
-    const exercise = exerciseDate === "" ? "_" : exerciseDate.replace(" ", "_");
+    const exercise =
+      exerciseDate === "" ? "_" : exerciseDate.replaceAll(" ", "_");
     const resource = `${optionType}/${optionStyle}/${spotPrice}/${strikePrice}/${interestRate}/${volatility}/${matureTime}/${periods}/${exercise}`;
     return new URL(resource, this.serviceAddress);
   }
