@@ -28,6 +28,8 @@ export default function ControlPanel(props) {
     setOptionStyle,
     setPrice,
     pricingApi,
+    exerciseDate,
+    setExerciseDate,
   } = props;
 
   const [isBermuda, setIsBermuda] = React.useState(false);
@@ -99,12 +101,12 @@ export default function ControlPanel(props) {
       </div>
       <div>
         <PrettoSlider
-          name="Annual Interest Rate (%)"
+          name="Annual Interest Rate"
           value={interestRate}
           setValue={setInterestRate}
         />
         <PrettoSlider
-          name="Volitility (%)"
+          name="Volitility"
           value={volatility}
           setValue={setVolatility}
         />
@@ -139,7 +141,7 @@ export default function ControlPanel(props) {
           defaultValue=""
           helperText="Exercise Date"
           onChange={(event) => {
-            // Todo
+            setExerciseDate(event.target.value);
           }}
         />
       </div>
@@ -156,6 +158,7 @@ export default function ControlPanel(props) {
               volatility,
               matureTime,
               periods,
+              exerciseDate,
               (result) => {
                 setPrice(result > 0 ? result : "Invalid");
               }

@@ -70,6 +70,7 @@ export default function Main(props) {
   const [periods, setPeriods] = React.useState(5);
   const [optionType, setOptionType] = React.useState("put");
   const [optionStyle, setOptionStyle] = React.useState("europe");
+  const [exerciseDate, setExerciseDate] = React.useState("");
 
   return (
     <React.Fragment>
@@ -101,6 +102,8 @@ export default function Main(props) {
         optionStyle={optionStyle}
         setOptionStyle={setOptionStyle}
         setPrice={setPrice}
+        exerciseDate={exerciseDate}
+        setExerciseDate={setExerciseDate}
         pricingApi={new PricingApi("http://127.0.0.1:8080")}
       ></ControlPanel>
       <ScrollTop {...props}>

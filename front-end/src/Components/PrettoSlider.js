@@ -47,7 +47,7 @@ export default function PrettoSlider(props) {
   return (
     <div>
       <Typography gutterBottom color="common.black">
-        {name}
+        {name}: {value}%
       </Typography>
       <Slider
         aria-label={name}
@@ -55,7 +55,7 @@ export default function PrettoSlider(props) {
         onChange={(event) => {
           setValue(event.target.value);
         }}
-        valueLabelDisplay="auto" 
+        valueLabelDisplay="auto"
       />
     </div>
   );

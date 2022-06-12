@@ -11,9 +11,10 @@ class PricingApi {
     interestRate,
     volatility,
     matureTime,
-    periods
+    periods,
+    exerciseDate
   ) {
-    const resource = `${optionType}/${optionStyle}/${spotPrice}/${strikePrice}/${interestRate}/${volatility}/${matureTime}/${periods}`;
+    const resource = `${optionType}/${optionStyle}/${spotPrice}/${strikePrice}/${interestRate}/${volatility}/${matureTime}/${periods}/${exerciseDate}`;
     return new URL(resource, this.serviceAddress);
   }
 
@@ -26,6 +27,7 @@ class PricingApi {
     volatility,
     matureTime,
     periods,
+    exerciseDate,
     handler
   ) {
     fetch(
@@ -37,7 +39,8 @@ class PricingApi {
         interestRate,
         volatility,
         matureTime,
-        periods
+        periods,
+        exerciseDate
       ),
       { method: "GET", mode: "cors" }
     )
