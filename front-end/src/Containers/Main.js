@@ -105,6 +105,7 @@ export default function Main(props) {
         setPrice={setPrice}
         exerciseDate={exerciseDate}
         setExerciseDate={setExerciseDate}
+        setTreePath={setTreePath}
         pricingApi={new PricingApi("http://127.0.0.1:8080")}
       ></ControlPanel>
       <ScrollTop {...props}>
