@@ -61,7 +61,7 @@ double CalcResourceFactory::calculate(string optionType, string optionStyle, dou
     std::cout << exerciseDatesStr << endl;
     bool isCallOption = optionType[0] == 'c' || optionType[0] == 'C';
     unordered_set<int> exerciseDates = string_to_unordered_set(exerciseDatesStr);
-    _option = Option(optionStyle, isCallOption, spotPrice, strikePrice, interestRate, volatility, matureDate, periods, exerciseDates);
+    _option = Option(optionStyle, isCallOption, spotPrice, strikePrice, interestRate, volatility, matureDate, periods, K, exerciseDates);
     return _option.getPrice();
 }
 
