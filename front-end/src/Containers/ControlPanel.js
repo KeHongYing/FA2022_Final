@@ -199,16 +199,17 @@ export default function ControlPanel(props) {
           id="exerciseDateInput"
           label="Exercise Date"
           defaultValue=""
-          helperText="Exercise Date"
+          helperText={isInvalidExercise ? "Invalid Format" : "e.g. 10 20 30 40"}
           onChange={(event) => {
             const v = event.target.value.trim();
             setExerciseDate(event.target.value);
             setIsInvalidExercise(
-              !v
-                .split(" ")
-                .every(
-                  (n) => n !== "" && !isNaN(n) && n > 0 && !n.includes(".")
-                )
+              v !== "" &&
+                !v
+                  .split(" ")
+                  .every(
+                    (n) => n !== "" && !isNaN(n) && n > 0 && !n.includes(".")
+                  )
             );
           }}
         />
