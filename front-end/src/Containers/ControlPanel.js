@@ -7,6 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
+import Vasicek from "../Components/Vasicek";
 
 export default function ControlPanel(props) {
   const {
@@ -30,6 +31,8 @@ export default function ControlPanel(props) {
     exerciseDate,
     setExerciseDate,
     setTreePath,
+    K,
+    setK,
     pricingApi,
   } = props;
 
@@ -59,6 +62,7 @@ export default function ControlPanel(props) {
         volatility,
         matureTime,
         periods,
+        K,
         exerciseDate,
         (result, prices) => {
           setPrice(result > 0 ? result : "Invalid");
@@ -70,7 +74,18 @@ export default function ControlPanel(props) {
 
   useEffect(() => {
     modifyPrice();
-  });
+  }, [
+    optionType,
+    optionStyle,
+    spotPrice,
+    strikePrice,
+    interestRate,
+    volatility,
+    matureTime,
+    periods,
+    K,
+    exerciseDate,
+  ]);
 
   return (
     <Box
@@ -231,6 +246,9 @@ export default function ControlPanel(props) {
           Pricing
         </Button>
       </div> */}
+      <div>
+        <Vasicek setK={setK}></Vasicek>
+      </div>
     </Box>
   );
 }

@@ -12,11 +12,12 @@ class PricingApi {
     volatility,
     matureTime,
     periods,
+    K,
     exerciseDate
   ) {
     const exercise =
       exerciseDate === "" ? "_" : exerciseDate.replaceAll(" ", "_");
-    const resource = `${optionType}/${optionStyle}/${spotPrice}/${strikePrice}/${interestRate}/${volatility}/${matureTime}/${periods}/${exercise}`;
+    const resource = `${optionType}/${optionStyle}/${spotPrice}/${strikePrice}/${interestRate}/${volatility}/${matureTime}/${periods}/${K}/${exercise}`;
     return new URL(resource, this.serviceAddress);
   }
 
@@ -29,6 +30,7 @@ class PricingApi {
     volatility,
     matureTime,
     periods,
+    K,
     exerciseDate,
     handler
   ) {
@@ -42,6 +44,7 @@ class PricingApi {
         volatility,
         matureTime,
         periods,
+        K,
         exerciseDate
       ),
       { method: "GET", mode: "cors" }

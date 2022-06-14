@@ -72,6 +72,7 @@ export default function Main(props) {
   const [optionStyle, setOptionStyle] = React.useState("europe");
   const [exerciseDate, setExerciseDate] = React.useState("");
   const [treePath, setTreePath] = React.useState([]);
+  const [K, setK] = React.useState(-1);
 
   return (
     <React.Fragment>
@@ -106,6 +107,8 @@ export default function Main(props) {
         exerciseDate={exerciseDate}
         setExerciseDate={setExerciseDate}
         setTreePath={setTreePath}
+        K={K}
+        setK={setK}
         pricingApi={new PricingApi("http://127.0.0.1:8080")}
       ></ControlPanel>
       <ScrollTop {...props}>
