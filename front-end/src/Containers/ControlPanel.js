@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import PrettoSlider from "../Components/PrettoSlider";
@@ -39,6 +39,38 @@ export default function ControlPanel(props) {
   const [isInvalidMatureDate, setIsInvalidMatureDate] = React.useState(false);
   const [isInvalidPeriods, setIsInvalidPeriods] = React.useState(false);
   const [isInvalidExercise, setIsInvalidExercise] = React.useState(false);
+
+  function modifyPrice() {
+    if (
+      !(
+        isInvalidSpotPrice ||
+        isInvalidStrikePrice ||
+        isInvalidMatureDate ||
+        isInvalidPeriods ||
+        isInvalidExercise
+      )
+    ) {
+      pricingApi.calculate(
+        optionType,
+        optionStyle,
+        spotPrice,
+        strikePrice,
+        interestRate,
+        volatility,
+        matureTime,
+        periods,
+        exerciseDate,
+        (result, prices) => {
+          setPrice(result > 0 ? result : "Invalid");
+          setTreePath(prices);
+        }
+      );
+    }
+  }
+
+  useEffect(() => {
+    modifyPrice();
+  });
 
   return (
     <Box
@@ -192,31 +224,7 @@ export default function ControlPanel(props) {
             isInvalidExercise
           }
           onClick={() => {
-            if (
-              !(
-                isInvalidSpotPrice ||
-                isInvalidStrikePrice ||
-                isInvalidMatureDate ||
-                isInvalidPeriods ||
-                isInvalidExercise
-              )
-            ) {
-              pricingApi.calculate(
-                optionType,
-                optionStyle,
-                spotPrice,
-                strikePrice,
-                interestRate,
-                volatility,
-                matureTime,
-                periods,
-                exerciseDate,
-                (result, prices) => {
-                  setPrice(result > 0 ? result : "Invalid");
-                  setTreePath(prices);
-                }
-              );
-            }
+            modifyPrice();
           }}
         >
           Pricing
