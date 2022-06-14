@@ -214,7 +214,7 @@ export default function ControlPanel(props) {
           }}
         />
       </div>
-      <div>
+      {/* <div>
         <Button
           variant="contained"
           disabled={
@@ -230,7 +230,7 @@ export default function ControlPanel(props) {
         >
           Pricing
         </Button>
-      </div>
+      </div> */}
     </Box>
   );
 }
