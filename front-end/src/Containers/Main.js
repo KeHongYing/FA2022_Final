@@ -71,7 +71,6 @@ export default function Main(props) {
   const [optionType, setOptionType] = React.useState("put");
   const [optionStyle, setOptionStyle] = React.useState("europe");
   const [exerciseDate, setExerciseDate] = React.useState("");
-  const [treePath, setTreePath] = React.useState([]);
   const [modelType, setModelType] = React.useState("binomial");
   const [K, setK] = React.useState(0);
   const [N, setN] = React.useState(1);
@@ -108,7 +107,6 @@ export default function Main(props) {
         setPrice={setPrice}
         exerciseDate={exerciseDate}
         setExerciseDate={setExerciseDate}
-        setTreePath={setTreePath}
         modelType={modelType}
         setModelType={setModelType}
         K={K}

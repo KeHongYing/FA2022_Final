@@ -30,7 +30,6 @@ export default function ControlPanel(props) {
     setPrice,
     exerciseDate,
     setExerciseDate,
-    setTreePath,
     modelType,
     setModelType,
     K,
@@ -70,9 +69,8 @@ export default function ControlPanel(props) {
         K,
         N,
         exerciseDate,
-        (result, prices) => {
+        (result) => {
           setPrice(result > 0 ? result : "Invalid");
-          setTreePath(prices);
         }
       );
     }
