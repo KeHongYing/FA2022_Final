@@ -88,11 +88,12 @@ public:
         double tmpRate = periodRate;
         double discoutRate = 1;
         double price = 0;
+        double sqrtPeriod = sqrt(period);
         for (int i = 0; i < numPeriods; i++)
         {
             double n = distribution(generator);
             tmpRate = tmpRate + reversionSpeed * (periodRate - tmpRate) * period +
-                      annualVolatility * sqrt(period) * n;
+                      annualVolatility * sqrtPeriod * n;
             tmpStockPrice *= tmpRate;
             discoutRate *= periodRate;
             if (exerciseTimes.count(i + 1) != 0)
