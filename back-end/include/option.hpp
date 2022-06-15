@@ -6,9 +6,11 @@
 #include <unordered_set>
 #include <vector>
 
+#include "Pricer.hpp"
+
 using namespace std;
 
-class Option {
+class Option : public Pricer {
     string type;
     bool isCallOption;
     double stockPrice;
@@ -68,7 +70,7 @@ class Option {
         }
     }
 
-    double getPrice() {
+    double getPrice() override {
         prices = vector<vector<double>>(numPeriods + 1, vector<double>(numPeriods + 1, 0));
         prices[0][0] = stockPrice;
 
