@@ -7,6 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
+import MonteCaro from "../Components/MonteCaro";
 
 export default function ControlPanel(props) {
   const {
@@ -30,6 +31,12 @@ export default function ControlPanel(props) {
     exerciseDate,
     setExerciseDate,
     setTreePath,
+    modelType,
+    setModelType,
+    K,
+    setK,
+    N,
+    setN,
     pricingApi,
   } = props;
 
@@ -51,6 +58,7 @@ export default function ControlPanel(props) {
       )
     ) {
       pricingApi.calculate(
+        modelType,
         optionType,
         optionStyle,
         spotPrice,
@@ -59,6 +67,8 @@ export default function ControlPanel(props) {
         volatility,
         matureTime,
         periods,
+        K,
+        N,
         exerciseDate,
         (result, prices) => {
           setPrice(result > 0 ? result : "Invalid");
@@ -80,6 +90,9 @@ export default function ControlPanel(props) {
     matureTime,
     periods,
     exerciseDate,
+    K,
+    N,
+    modelType,
   ]);
 
   return (
@@ -92,6 +105,21 @@ export default function ControlPanel(props) {
       autoComplete="off"
     >
       <div>
+        <FormControl sx={{ m: 1, minWidth: 150 }}>
+          <InputLabel id="model-type-select-label">Option Type</InputLabel>
+          <Select
+            labelId="model-type-select-label"
+            id="model-type-simple-select"
+            value={modelType}
+            label="Model Type"
+            onChange={(event) => {
+              setModelType(event.target.value);
+            }}
+          >
+            <MenuItem value="binomial">Binomial</MenuItem>
+            <MenuItem value="mc">Monte-Carlo</MenuItem>
+          </Select>
+        </FormControl>
         <FormControl sx={{ m: 1, minWidth: 150 }}>
           <InputLabel id="option-type-select-label">Option Type</InputLabel>
           <Select
@@ -241,6 +269,14 @@ export default function ControlPanel(props) {
           Pricing
         </Button>
       </div> */}
+      <div>
+        <MonteCaro
+          setK={setK}
+          modelType={modelType}
+          N={N}
+          setN={setN}
+        ></MonteCaro>
+      </div>
     </Box>
   );
 }
