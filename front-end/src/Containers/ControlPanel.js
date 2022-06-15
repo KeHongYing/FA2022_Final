@@ -56,6 +56,7 @@ export default function ControlPanel(props) {
         isInvalidExercise
       )
     ) {
+      setPrice("Computing...");
       pricingApi.calculate(
         modelType,
         optionType,
@@ -70,7 +71,7 @@ export default function ControlPanel(props) {
         N,
         exerciseDate,
         (result) => {
-          setPrice(result > 0 ? result : "Invalid");
+          setPrice(result >= 0 ? result : "Invalid");
         }
       );
     }

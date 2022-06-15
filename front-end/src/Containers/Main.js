@@ -113,7 +113,7 @@ export default function Main(props) {
         setK={setK}
         N={N}
         setN={setN}
-        pricingApi={new PricingApi("http://127.0.0.1:8080")}
+        pricingApi={new PricingApi("http://140.112.29.148:8080")}
       ></ControlPanel>
       <ScrollTop {...props}>
         <Fab size="small" aria-label="scroll back to top">
