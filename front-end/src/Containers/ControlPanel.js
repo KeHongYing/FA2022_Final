@@ -70,7 +70,17 @@ export default function ControlPanel(props) {
 
   useEffect(() => {
     modifyPrice();
-  });
+  }, [
+    optionType,
+    optionStyle,
+    spotPrice,
+    strikePrice,
+    interestRate,
+    volatility,
+    matureTime,
+    periods,
+    exerciseDate,
+  ]);
 
   return (
     <Box
